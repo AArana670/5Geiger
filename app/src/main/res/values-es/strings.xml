@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">5Geigir</string>
+    <string name="welcome_title">Bienvenido a 5Geigir</string>
+    <string name="welcome_msg">Descubre las emisiones de tu entorno con 5Geigir.</string>
+    <string name="welcome_btn_cont">Siguiente</string>
+</resources>
