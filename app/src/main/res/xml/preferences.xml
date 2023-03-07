@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="Aspecto">
+
+        <ListPreference
+            android:defaultValue="1"
+            android:entries="@array/prefs_theme"
+            android:entryValues="@array/prefs_theme"
+            android:key="theme"
+            android:title="@string/pref_theme_title" />
+        <ListPreference
+            android:defaultValue="1"
+            android:entries="@array/prefs_language"
+            android:entryValues="@array/prefs_language"
+            android:key="language"
+            android:title="@string/pref_lang_title" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_dataManagement">
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="data_expiration"
+            android:summary="@string/prefs_dataExpiration_desc"
+            android:title="@string/prefs_dataExpiration_title" />
+    </PreferenceCategory>
+    <Preference
+        android:key="token"
+        android:selectable="false"
+        android:persistent="false"
+        android:title="@string/pref_token_title"
+        android:summary="@string/pref_token_desc"/>
+</PreferenceScreen>

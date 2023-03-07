@@ -2,5 +2,26 @@
     <string name="app_name">5Geigir</string>
     <string name="welcome_title">Welcome to 5Geigir</string>
     <string name="welcome_msg">Discover the emissions of your surroundings with 5Geigir.</string>
-    <string name="welcome_btn_cont">Next</string>
+    <string name="welcome_btn">Next</string>
+    <string name="main_getStarted">Start measuring your environment</string>
+    <string name="main_measureStart">Measure</string>
+    <string name="main_measureStop">Stop</string>
+    <string name="permission_title">Required permissions</string>
+    <string name="permission_msg">5Geigir needs access to your radio signals and location in order to measure the EM field, pleace accept them.</string>
+    <string name="menu_settingsOption">Settings</string>
+    <string name="pref_dataManagement">Data management</string>
+    <string name="prefs_dataExpiration_title">Data expiration</string>
+    <string name="prefs_dataExpiration_desc">Your history data will be deleted after a week</string>
+    <string name="pref_theme_light">Light</string>
+    <string name="pref_theme_dark">Dark</string>
+    <string name="pref_theme_systemDefault">Default theme</string>
+    <string name="pref_theme_title">Theme</string>
+    <string name="pref_lang_english">English</string>
+    <string name="pref_lang_spanish">Spanish</string>
+    <string name="pref_lang_title">Language</string>
+    <string name="pref_lang_systemDefault">Default language</string>
+    <string name="pref_token_title">Device token</string>
+    <string name="pref_token_desc">Use this code in 5Geo to visualize your data</string>
+    <string name="main_newMeasures">new measurements</string>
+    <string name="loading">Loading</string>
 </resources>

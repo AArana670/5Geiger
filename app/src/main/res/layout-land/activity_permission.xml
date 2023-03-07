@@ -33,58 +33,38 @@
             android:orientation="vertical"
             android:weightSum="8">
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
             <TextView
                 android:id="@+id/txt_init_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginVertical="20dp"
                 android:layout_weight="1"
                 android:text="@string/welcome_title"
                 android:textAlignment="center"
                 android:textSize="34sp" />
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
             <TextView
                 android:id="@+id/txt_intro_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginVertical="20dp"
                 android:layout_weight="4"
                 android:text="@string/welcome_msg"
                 android:textAlignment="center" />
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
         </LinearLayout>
-
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
 
         <Button
             android:id="@+id/btn_intro"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="jumpToNext"
-            android:text="@string/welcome_btn_cont"
-            android:textAlignment="center" />
-
-        <Space
-            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_marginVertical="30dp"
+            android:layout_weight="2"
+            android:onClick="jumpToNext"
+            android:text="@string/welcome_btn"
+            android:textAlignment="center" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

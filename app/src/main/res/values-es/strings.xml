@@ -3,5 +3,26 @@
     <string name="app_name">5Geigir</string>
     <string name="welcome_title">Bienvenido a 5Geigir</string>
     <string name="welcome_msg">Descubre las emisiones de tu entorno con 5Geigir.</string>
-    <string name="welcome_btn_cont">Siguiente</string>
+    <string name="welcome_btn">Siguiente</string>
+    <string name="main_getStarted">Empieza a medir tu entorno</string>
+    <string name="main_measureStart">Medir</string>
+    <string name="main_measureStop">Parar</string>
+    <string name="permission_title">Permisos requeridos</string>
+    <string name="permission_msg">5Geigir necesita acceso a tus señales de radio y ubicación para poder medir el campo EM, por favor acéptalos.</string>
+    <string name="menu_settingsOption">Ajustes</string>
+    <string name="pref_dataManagement">Gestión de datos</string>
+    <string name="prefs_dataExpiration_title">Caducidad de los datos</string>
+    <string name="prefs_dataExpiration_desc">Tus datos del historial se borrarán tras una semana</string>
+    <string name="pref_theme_light">Claro</string>
+    <string name="pref_theme_dark">Oscuro</string>
+    <string name="pref_theme_systemDefault">Tema por defecto</string>
+    <string name="pref_theme_title">Tema</string>
+    <string name="pref_lang_english">Inglés</string>
+    <string name="pref_lang_spanish">Español</string>
+    <string name="pref_lang_title">Idioma</string>
+    <string name="pref_lang_systemDefault">Idioma por defecto</string>
+    <string name="pref_token_title">Token del dispositivo</string>
+    <string name="pref_token_desc">Usa este código en 5Geo para visualizar tus datos</string>
+    <string name="main_newMeasures">mediciones nuevas</string>
+    <string name="loading">Cargando</string>
 </resources>

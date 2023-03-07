@@ -72,7 +72,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="3"
                 android:onClick="jumpToNext"
-                android:text="@string/welcome_btn_cont"
+                android:text="@string/welcome_btn"
                 android:textAlignment="center" />
 
             <Space
