@@ -17,10 +17,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        displayState();
-
         setContentView(R.layout.activity_main);
         //getSupportActionBar().hide();
+
+        displayState();
     }
 
     private void displayState() {
