@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 measuring = false;
                 btn.setText(R.string.main_measureStart);
             } else {
-                //startMeasure();
+                startMeasure();
                 showCurrentMeasure();
                 measuring = true;
                 btn.setText(R.string.main_measureStop);
@@ -59,6 +59,10 @@ public class MainActivity extends AppCompatActivity {
         }catch (Exception e){
             //dialog insisting on permissions
         }
+    }
+
+    private void startMeasure() {
+
     }
 
     private void showLastMeasure() {
