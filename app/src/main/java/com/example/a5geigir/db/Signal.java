@@ -17,7 +17,7 @@ public class Signal{
 
     @NonNull
     @ColumnInfo(name = "moment")
-    public Timestamp moment;
+    public String moment;
 
     @ColumnInfo(name = "ubiLat")
     public double ubiLat;
@@ -28,7 +28,7 @@ public class Signal{
     @ColumnInfo(name = "dBm")
     public int dBm;
 
-    public Signal(@NonNull int cId, @NonNull Timestamp moment, double ubiLat, double ubiLong, int dBm) {
+    public Signal(@NonNull int cId, @NonNull String moment, double ubiLat, double ubiLong, int dBm) {
         this.cId = cId;
         this.moment = moment;
         this.ubiLat = ubiLat;

@@ -14,13 +14,13 @@ public interface SignalDao {
     List<Signal> getSignals();
 
     @Query("SELECT * FROM signal WHERE moment > :moment")
-    List<Signal> getSignalsSince(Timestamp moment);
+    List<Signal> getSignalsSince(String moment);
 
     @Insert
-    void insertSignal(Signal...signals);
+    void insertSignal(Signal signal);
 
     @Query("DELETE FROM signal WHERE moment < :moment")
-    void deleteSignalsUntil(Timestamp moment);
+    void deleteSignalsUntil(String moment);
 
     @Query("DELETE FROM signal")
     void clearSignals();
