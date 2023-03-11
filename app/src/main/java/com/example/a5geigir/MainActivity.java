@@ -48,17 +48,22 @@ public class MainActivity extends AppCompatActivity {
         Button btn = (Button) findViewById(R.id.main_btn);
 
         if (measuring){
-            showLastMeasure();
-            btn.setText(R.string.main_measureStart);
-        }else{
             showCurrentMeasure();
             btn.setText(R.string.main_measureStop);
+        }else{
+            showLastMeasure();
+            btn.setText(R.string.main_measureStart);
         }
 
     }
 
     public void jumpToSettings(View v){
         Intent i = new Intent(this, SettingsActivity.class);
+        startActivity(i);
+    }
+
+    public void jumpToHistory(View v){
+        Intent i = new Intent(this, HistoryActivity.class);
         startActivity(i);
     }
 
