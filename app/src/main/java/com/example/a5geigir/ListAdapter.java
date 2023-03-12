@@ -1,12 +1,14 @@
 package com.example.a5geigir;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextClock;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,6 +40,14 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>{
         holder.signalTime.setText("time");
         holder.signalDBm.setText(signalList.get(position).dBm+" dBm");
         holder.signalBar.setProgress(80);
+
+        holder.signalPanel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(context, MeasurementActivity.class);
+                context.startActivity(i);
+            }
+        });
     }
 
     @Override
@@ -51,6 +61,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>{
         private TextView signalTime;
         private TextView signalDBm;
         private ProgressBar signalBar;
+        private View signalPanel;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -58,6 +69,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>{
             signalTime = (TextView) itemView.findViewById(R.id.signal_time);
             signalDBm = (TextView) itemView.findViewById(R.id.signal_dBm);
             signalBar = (ProgressBar) itemView.findViewById(R.id.signal_bar);
+            signalPanel = itemView.findViewById(R.id.signal_panel);
         }
     }
 

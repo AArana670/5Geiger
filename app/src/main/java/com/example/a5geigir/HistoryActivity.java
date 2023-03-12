@@ -1,12 +1,16 @@
 package com.example.a5geigir;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
 
 import com.example.a5geigir.db.AppDatabase;
 import com.example.a5geigir.db.Signal;
@@ -41,5 +45,10 @@ public class HistoryActivity extends AppCompatActivity {
         listAdapter = new ListAdapter(signalList,this);
 
         signalRecyler.setAdapter(listAdapter);
+    }
+
+    public void jumpToSettings(View v){
+        Intent i = new Intent(this, SettingsActivity.class);
+        startActivity(i);
     }
 }

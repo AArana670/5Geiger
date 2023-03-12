@@ -25,4 +25,9 @@
     <string name="pref_token_desc">Usa este código en 5Geo para visualizar tus datos</string>
     <string name="main_newMeasures">mediciones nuevas</string>
     <string name="loading">Cargando</string>
+    <string name="measurement_cId_title">ID de celda</string>
+    <string name="measurement_ubiLat_title">Latitud</string>
+    <string name="measurement_ubiLong_title">Longitud</string>
+    <string name="char_lt"><![CDATA[<]]></string>
+    <string name="char_gt"><![CDATA[>]]></string>
 </resources>

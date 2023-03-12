@@ -24,4 +24,9 @@
     <string name="pref_token_desc">Use this code in 5Geo to visualize your data</string>
     <string name="main_newMeasures">new measurements</string>
     <string name="loading">Loading</string>
+    <string name="measurement_cId_title">Cell ID</string>
+    <string name="measurement_ubiLat_title">Latitude</string>
+    <string name="measurement_ubiLong_title">Longitude</string>
+    <string name="char_lt"><![CDATA[<]]></string>
+    <string name="char_gt"><![CDATA[>]]></string>
 </resources>
