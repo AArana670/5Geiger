@@ -16,6 +16,9 @@ public interface SignalDao {
     @Query("SELECT * FROM signal WHERE moment > :moment")
     List<Signal> getSignalsSince(String moment);
 
+    @Query("SELECT * FROM signal WHERE moment = :moment")
+    Signal getSignalAt(String moment);
+
     @Insert
     void insertSignal(Signal signal);
 

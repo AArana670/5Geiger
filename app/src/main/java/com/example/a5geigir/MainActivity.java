@@ -15,6 +15,7 @@ import com.example.a5geigir.db.AppDatabase;
 import com.example.a5geigir.db.Signal;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
@@ -90,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
     private void startMeasure() {
 
         int cId = (int) Math.floor(Math.random()*30);
-        String moment = Calendar.getInstance().toString();
+        String moment = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
         double ubiLat = 0;
         double ubiLong = 0;
         int dBm = (int) ((Math.random()*-50)-20);
@@ -109,5 +110,10 @@ public class MainActivity extends AppCompatActivity {
     private void showCurrentMeasure() {
         CardView card = (CardView) findViewById(R.id.measureDisplay);
 
+    }
+
+    public void clearDB(View v){
+        db.signalDao().clearSignals();
+        Log.d("SignalDB", "All signals have been deleted");
     }
 }

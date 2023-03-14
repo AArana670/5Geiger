@@ -70,6 +70,13 @@
             android:text="@string/main_measureStart"
             android:textSize="24sp" />
 
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="clearDB"
+            android:text="Clear" />
+
         <Space
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

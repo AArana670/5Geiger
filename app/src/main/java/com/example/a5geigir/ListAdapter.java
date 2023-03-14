@@ -36,8 +36,9 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.signalDate.setText("date");
-        holder.signalTime.setText("time");
+        String moment = signalList.get(position).moment;
+        holder.signalDate.setText(moment.split(" ")[0]);
+        holder.signalTime.setText(moment.split(" ")[1]);
         holder.signalDBm.setText(signalList.get(position).dBm+" dBm");
         holder.signalBar.setProgress(80);
 
@@ -45,6 +46,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>{
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(context, MeasurementActivity.class);
+                i.putExtra("moment",signalList.get(holder.getAdapterPosition()).moment+"");
                 context.startActivity(i);
             }
         });
