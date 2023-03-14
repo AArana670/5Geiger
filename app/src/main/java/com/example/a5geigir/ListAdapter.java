@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.a5geigir.db.Signal;
 
+import java.util.Collections;
 import java.util.List;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>{
@@ -24,6 +25,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>{
 
     public ListAdapter(List<Signal> signalList, Context context) {
         this.signalList = signalList;
+        Collections.reverse(this.signalList);
         this.context = context;
     }
 
