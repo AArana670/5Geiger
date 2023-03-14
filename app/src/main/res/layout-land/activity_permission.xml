@@ -34,7 +34,7 @@
             android:weightSum="8">
 
             <TextView
-                android:id="@+id/txt_init_title"
+                android:id="@+id/permission_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
@@ -45,7 +45,7 @@
                 android:textSize="34sp" />
 
             <TextView
-                android:id="@+id/txt_intro_desc"
+                android:id="@+id/permission_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
@@ -57,7 +57,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/btn_intro"
+            android:id="@+id/permission_btn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginVertical="30dp"

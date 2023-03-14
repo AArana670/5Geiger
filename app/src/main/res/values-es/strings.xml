@@ -30,4 +30,10 @@
     <string name="measurement_ubiLong_title">Longitud</string>
     <string name="char_lt"><![CDATA[<]]></string>
     <string name="char_gt"><![CDATA[>]]></string>
+    <string name="permission_btn">Conceder</string>
+    <string name="dialog_permissions_title">Permisos necesarios</string>
+    <string name="dialog_permissions_desc">5Geigir necesita algunos permisos para medir</string>
+    <string name="dialog_permissions_accept">Conceder</string>
+    <string name="dialog_permissions_deny">Denegar</string>
+    <string name="dialog_permissions_cancelled">Se ha cancelado la medición</string>
 </resources>

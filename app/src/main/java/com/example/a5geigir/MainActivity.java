@@ -3,13 +3,17 @@ package com.example.a5geigir;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.DialogFragment;
 import androidx.room.Room;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.a5geigir.db.AppDatabase;
 import com.example.a5geigir.db.Signal;
@@ -19,9 +23,10 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements DialogListener {
 
     private boolean measuring = false;
+    private boolean hasPermissions = false;
     private AppDatabase db;
 
     @Override
@@ -49,10 +54,10 @@ public class MainActivity extends AppCompatActivity {
         Button btn = (Button) findViewById(R.id.main_btn);
 
         if (measuring){
-            showCurrentMeasure();
+            showCurrentMeasurement();
             btn.setText(R.string.main_measureStop);
         }else{
-            showLastMeasure();
+            showLastMeasurement();
             btn.setText(R.string.main_measureStart);
         }
 
@@ -69,22 +74,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void switchState(View v){
-        try {
-            Button btn = (Button) findViewById(R.id.main_btn);
+        Button btn = (Button) findViewById(R.id.main_btn);
 
-            if (measuring) {
-                //stopMeasure();
-                showLastMeasure();
-                measuring = false;
-                btn.setText(R.string.main_measureStart);
-            } else {
+        if (measuring) {
+            stopMeasure();
+            showLastMeasurement();
+            measuring = false;
+            btn.setText(R.string.main_measureStart);
+        } else {
+            if (!hasPermissions) {  //Insist on the permission request
+                DialogFragment dialog = new PermissionDialog();
+                dialog.show(getSupportFragmentManager(), "permission_dialog");
+            }else {
                 startMeasure();
-                showCurrentMeasure();
+                showCurrentMeasurement();
                 measuring = true;
                 btn.setText(R.string.main_measureStop);
             }
-        }catch (Exception e){
-            //dialog insisting on permissions
         }
     }
 
@@ -103,17 +109,43 @@ public class MainActivity extends AppCompatActivity {
         Log.d("SignalDB", "Added new; cId: "+s.cId+", moment: "+s.moment+", ubiLat: "+s.ubiLat+", ubiLong: "+ s.ubiLong+", dBm: "+s.dBm);
     }
 
-    private void showLastMeasure() {
-        CardView card = (CardView) findViewById(R.id.measureDisplay);
-    }
-
-    private void showCurrentMeasure() {
-        CardView card = (CardView) findViewById(R.id.measureDisplay);
+    public void stopMeasure(){
 
     }
 
-    public void clearDB(View v){
+    private void showLastMeasurement() {
+        CardView card = (CardView) findViewById(R.id.measureDisplay);
+    }
+
+    private void showCurrentMeasurement() {
+        CardView card = (CardView) findViewById(R.id.measureDisplay);
+
+    }
+
+    public void clearDB(View v){  //Method for debugging
         db.signalDao().clearSignals();
         Log.d("SignalDB", "All signals have been deleted");
+    }
+
+    @Override
+    public void positiveAnswer() {  //PermissionDialog has accepted the permission request
+        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        Uri uri = Uri.fromParts("package", getPackageName(), null);
+        intent.setData(uri);
+        startActivity(intent);
+
+        hasPermissions = true;
+
+        startMeasure();
+        showCurrentMeasurement();
+        measuring = true;
+
+        Button btn = (Button) findViewById(R.id.main_btn);
+        btn.setText(R.string.main_measureStop);
+    }
+
+    @Override
+    public void negativeAnswer() {  //PermissionDialog has denied the permission request
+        Toast.makeText(this, getString(R.string.dialog_permissions_cancelled), Toast.LENGTH_SHORT).show();
     }
 }

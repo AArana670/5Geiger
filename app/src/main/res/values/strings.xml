@@ -29,4 +29,10 @@
     <string name="measurement_ubiLong_title">Longitude</string>
     <string name="char_lt"><![CDATA[<]]></string>
     <string name="char_gt"><![CDATA[>]]></string>
+    <string name="permission_btn">Grant</string>
+    <string name="dialog_permissions_title">Permissions required</string>
+    <string name="dialog_permissions_desc">5Geigir requires some permissions to measure</string>
+    <string name="dialog_permissions_accept">Grant</string>
+    <string name="dialog_permissions_deny">Deny</string>
+    <string name="dialog_permissions_cancelled">The measurement has been cancelled</string>
 </resources>
