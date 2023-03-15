@@ -23,11 +23,12 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements DialogListener {
+public class MainActivity extends AppCompatActivity implements DialogListener, NetworkListener {
 
-    private boolean measuring = false;
+
     private boolean hasPermissions = false;
     private AppDatabase db;
+    private NetworkManager networkManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +36,8 @@ public class MainActivity extends AppCompatActivity implements DialogListener {
 
         setContentView(R.layout.activity_main);
         //getSupportActionBar().hide();
+
+        networkManager = NetworkManager.getInstance(this);
 
         displayState();
 
@@ -44,16 +47,16 @@ public class MainActivity extends AppCompatActivity implements DialogListener {
                 "signalDB"
         ).allowMainThreadQueries().build();
 
-        List<Signal> signalList = db.signalDao().getSignals();
+        List<Signal> signalList = db.signalDao().getSignals();  //For debugging purposes only
         for (Signal s : signalList){
             Log.d("SignalDB", "cId: "+s.cId+", moment: "+s.moment+", ubiLat: "+s.ubiLat+", ubiLong: "+ s.ubiLong+", dBm: "+s.dBm);
         }
     }
 
-    private void displayState() {
+    private void displayState() {  //In case the thread was already running, opening the app will restore the display
         Button btn = (Button) findViewById(R.id.main_btn);
 
-        if (measuring){
+        if (networkManager.isRunning()){
             showCurrentMeasurement();
             btn.setText(R.string.main_measureStop);
         }else{
@@ -76,53 +79,42 @@ public class MainActivity extends AppCompatActivity implements DialogListener {
     public void switchState(View v){
         Button btn = (Button) findViewById(R.id.main_btn);
 
-        if (measuring) {
+        if (networkManager.isRunning()) {
             stopMeasure();
             showLastMeasurement();
-            measuring = false;
             btn.setText(R.string.main_measureStart);
+            Toast.makeText(this, "Measurement stopped", Toast.LENGTH_SHORT).show();
         } else {
             if (!hasPermissions) {  //Insist on the permission request
                 DialogFragment dialog = new PermissionDialog();
                 dialog.show(getSupportFragmentManager(), "permission_dialog");
-            }else {
+            }else {  //If already has permissions
                 startMeasure();
                 showCurrentMeasurement();
-                measuring = true;
                 btn.setText(R.string.main_measureStop);
             }
         }
     }
 
     private void startMeasure() {
-
-        int cId = (int) Math.floor(Math.random()*30);
-        String moment = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
-        double ubiLat = 0;
-        double ubiLong = 0;
-        int dBm = (int) ((Math.random()*-50)-20);
-
-        Signal s = new Signal(cId, moment, ubiLat, ubiLong, dBm);
-
-        db.signalDao().insertSignal(s);
-
-        Log.d("SignalDB", "Added new; cId: "+s.cId+", moment: "+s.moment+", ubiLat: "+s.ubiLat+", ubiLong: "+ s.ubiLong+", dBm: "+s.dBm);
+        networkManager.run();
     }
 
     public void stopMeasure(){
-
+        networkManager.stop();
     }
 
     private void showLastMeasurement() {
         CardView card = (CardView) findViewById(R.id.measureDisplay);
+        networkManager.removeListener(this);
     }
 
     private void showCurrentMeasurement() {
         CardView card = (CardView) findViewById(R.id.measureDisplay);
-
+        networkManager.addListener(this);
     }
 
-    public void clearDB(View v){  //Method for debugging
+    public void clearDB(View v){  //Method for debugging purposes only
         db.signalDao().clearSignals();
         Log.d("SignalDB", "All signals have been deleted");
     }
@@ -135,17 +127,33 @@ public class MainActivity extends AppCompatActivity implements DialogListener {
         startActivity(intent);
 
         hasPermissions = true;
-
-        startMeasure();
-        showCurrentMeasurement();
-        measuring = true;
-
-        Button btn = (Button) findViewById(R.id.main_btn);
-        btn.setText(R.string.main_measureStop);
     }
 
     @Override
     public void negativeAnswer() {  //PermissionDialog has denied the permission request
         Toast.makeText(this, getString(R.string.dialog_permissions_cancelled), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onNetworkUpdate(Signal s) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getApplicationContext(), "New signal: "+s.dBm+" dBm", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        networkManager.removeListener(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (networkManager.isRunning())
+            networkManager.addListener(this);
     }
 }

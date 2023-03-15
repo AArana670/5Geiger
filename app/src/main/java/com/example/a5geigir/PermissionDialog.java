@@ -16,7 +16,7 @@ public class PermissionDialog extends DialogFragment {
 
     @NonNull
     @Override
-    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {  //Basic Dialog with 2 possible answers
         super.onCreateDialog(savedInstanceState);
 
         listener = (DialogListener) getActivity();
@@ -27,14 +27,14 @@ public class PermissionDialog extends DialogFragment {
 
         builder.setPositiveButton(getString(R.string.dialog_permissions_accept), new DialogInterface.OnClickListener() {
         @Override
-        public void onClick(DialogInterface dialogInterface, int i) {
+        public void onClick(DialogInterface dialogInterface, int i) {  //Will only call the listener
                listener.positiveAnswer();
             }
         });
 
         builder.setNegativeButton(getString(R.string.dialog_permissions_deny), new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+            public void onClick(DialogInterface dialogInterface, int i) {  //Will only call the listener
                 listener.negativeAnswer();
             }
         });

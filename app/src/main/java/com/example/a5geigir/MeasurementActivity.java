@@ -18,7 +18,6 @@ import java.util.List;
 
 public class MeasurementActivity extends AppCompatActivity {
 
-    private List<Signal> signalList;
     private int currentPos = 0;
     private TextView signalDate;
     private TextView signalTime;
@@ -27,6 +26,8 @@ public class MeasurementActivity extends AppCompatActivity {
     private TextView signalCId;
     private TextView signalUbiLat;
     private TextView signalUbiLong;
+    private TextView signalFreq;
+    private TextView signalType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +45,7 @@ public class MeasurementActivity extends AppCompatActivity {
                 "signalDB"
         ).allowMainThreadQueries().build();
 
-        Signal s = db.signalDao().getSignalAt(moment);
+        Signal s = db.signalDao().getSignalAt(moment);  //Get the data of the selected signal
 
         signalDate = (TextView) findViewById(R.id.measurement_date);
         signalDate.setText(moment.split(" ")[0]);
@@ -63,14 +64,20 @@ public class MeasurementActivity extends AppCompatActivity {
 
         signalUbiLong = (TextView) findViewById(R.id.measurement_ubiLong_value);
         signalUbiLong.setText(s.ubiLong+"");
+
+        signalFreq = (TextView) findViewById(R.id.measurement_freq_value);
+        signalFreq.setText(s.freq+"");
+
+        signalType = (TextView) findViewById(R.id.measurement_type_value);
+        signalType.setText(s.type+"");
     }
 
-    public void showPrev(View v){
+    public void showPrev(View v){  //Currently unused feature
         Toast toast = Toast.makeText(this, "Prev",Toast.LENGTH_SHORT);
         toast.show();
     }
 
-    public void showNext(View v){
+    public void showNext(View v){  //Currently unused feature
         Toast toast = Toast.makeText(this, "Next",Toast.LENGTH_SHORT);
         toast.show();
     }

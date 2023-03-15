@@ -37,7 +37,7 @@ public class SettingsActivity extends AppCompatActivity {
             if (tokenPref != null) {
                 tokenPref.setSummaryProvider(new Preference.SummaryProvider<Preference>() {  //https://developer.android.com/develop/ui/views/components/settings/customize-your-settings#java
                     @Override
-                    public CharSequence provideSummary(Preference preference) {
+                    public CharSequence provideSummary(Preference preference) {  //Set the summary of Token field
                         return "Token: " + "Merequetengue";
                     }
                 });

@@ -10,30 +10,38 @@ import java.sql.Timestamp;
 @Entity
 public class Signal{
 
-    @PrimaryKey
     @NonNull
     @ColumnInfo(name = "cId")
-    public int cId;
+    public int cId;  //Physical cell identifier
 
+    @PrimaryKey
     @NonNull
     @ColumnInfo(name = "moment")
-    public String moment;
+    public String moment;  //Time of measurement in yyyy-MM-dd HH:mm:ss format
 
     @ColumnInfo(name = "ubiLat")
-    public double ubiLat;
+    public double ubiLat;  //Latitude of measurement position
 
     @ColumnInfo(name = "ubiLong")
-    public double ubiLong;
+    public double ubiLong;  //Longitude of measurement position
 
     @ColumnInfo(name = "dBm")
-    public int dBm;
+    public int dBm;  //Signal strength in dBm
 
-    public Signal(@NonNull int cId, @NonNull String moment, double ubiLat, double ubiLong, int dBm) {
+    @ColumnInfo(name = "type")
+    public String type;  //Network type (4G, 5G, ...)
+
+    @ColumnInfo(name = "frequency")
+    public int freq;  //Radio frequency in MHz
+
+    public Signal(@NonNull int cId, @NonNull String moment, double ubiLat, double ubiLong, int dBm, String type, int freq) {
         this.cId = cId;
         this.moment = moment;
         this.ubiLat = ubiLat;
         this.ubiLong = ubiLong;
         this.dBm = dBm;
+        this.type = type;
+        this.freq = freq;
     }
 
 }

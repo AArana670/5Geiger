@@ -10,11 +10,11 @@ import java.util.List;
 @Dao
 public interface SignalDao {
 
-    @Query("SELECT * FROM signal")
+    @Query("SELECT * FROM signal ORDER BY moment")
     List<Signal> getSignals();
 
     @Query("SELECT * FROM signal WHERE moment > :moment")
-    List<Signal> getSignalsSince(String moment);
+    List<Signal> getSignalsSince(String moment);  //Currently unused feature
 
     @Query("SELECT * FROM signal WHERE moment = :moment")
     Signal getSignalAt(String moment);
@@ -23,9 +23,9 @@ public interface SignalDao {
     void insertSignal(Signal signal);
 
     @Query("DELETE FROM signal WHERE moment < :moment")
-    void deleteSignalsUntil(String moment);
+    void deleteSignalsUntil(String moment);  //Currently unused feature
 
     @Query("DELETE FROM signal")
-    void clearSignals();
+    void clearSignals();  //Method for debugging purposes only
 
 }

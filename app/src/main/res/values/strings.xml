@@ -35,4 +35,6 @@
     <string name="dialog_permissions_accept">Grant</string>
     <string name="dialog_permissions_deny">Deny</string>
     <string name="dialog_permissions_cancelled">The measurement has been cancelled</string>
+    <string name="measurement_freq_title">Frequency</string>
+    <string name="measurement_type_title">Network type</string>
 </resources>
