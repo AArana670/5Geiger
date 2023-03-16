@@ -33,7 +33,7 @@ public class SettingsActivity extends AppCompatActivity {
 
             setPreferencesFromResource(R.xml.preferences, rootKey);
 
-            Preference tokenPref = findPreference("token");
+            /*Preference tokenPref = findPreference("token");  //Currently unused feature
             if (tokenPref != null) {
                 tokenPref.setSummaryProvider(new Preference.SummaryProvider<Preference>() {  //https://developer.android.com/develop/ui/views/components/settings/customize-your-settings#java
                     @Override
@@ -41,7 +41,7 @@ public class SettingsActivity extends AppCompatActivity {
                         return "Token: " + "Merequetengue";
                     }
                 });
-            }
+            }*/
         }
     }
 }
