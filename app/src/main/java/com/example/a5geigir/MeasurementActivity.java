@@ -3,6 +3,7 @@ package com.example.a5geigir;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -56,6 +57,10 @@ public class MeasurementActivity extends AppCompatActivity {
         signalDBm = (TextView) findViewById(R.id.measurement_dBm_value);
         signalDBm.setText(s.dBm+"");
 
+        signalBar = (ProgressBar) findViewById(R.id.measurement_dBm_bar);
+        signalBar.setProgress(s.dBm);
+        setProgressColor(s.dBm);
+
         signalCId = (TextView) findViewById(R.id.measurement_cId_value);
         signalCId.setText(s.cId+"");
 
@@ -80,5 +85,18 @@ public class MeasurementActivity extends AppCompatActivity {
     public void showNext(View v){  //Currently unused feature
         Toast toast = Toast.makeText(this, "Next",Toast.LENGTH_SHORT);
         toast.show();
+    }
+
+    private void setProgressColor(int p){
+        if (p < -50) {
+            signalBar.getProgressDrawable().setColorFilter(  //https://stackoverflow.com/questions/2020882/how-to-change-progress-bars-progress-color-in-android
+                    Color.BLUE, android.graphics.PorterDuff.Mode.SRC_IN);
+        }else if (p < -30){
+            signalBar.getProgressDrawable().setColorFilter(
+                    Color.rgb(255,88,53), android.graphics.PorterDuff.Mode.SRC_IN);
+        }else{
+            signalBar.getProgressDrawable().setColorFilter(
+                    Color.RED, android.graphics.PorterDuff.Mode.SRC_IN);
+        }
     }
 }

@@ -2,6 +2,7 @@ package com.example.a5geigir;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +43,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>{
         holder.signalDate.setText(moment.split(" ")[0]);
         holder.signalTime.setText(moment.split(" ")[1]);
         holder.signalDBm.setText(signalList.get(position).dBm+" dBm");
-        holder.signalBar.setProgress(80);
+        holder.signalBar.setProgress(signalList.get(position).dBm);
+        setProgressColor(holder.signalBar);
 
         holder.signalPanel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,6 +54,19 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>{
                 context.startActivity(i);
             }
         });
+    }
+
+    private void setProgressColor(ProgressBar bar){
+        if (bar.getProgress() < -50) {
+            bar.getProgressDrawable().setColorFilter(  //https://stackoverflow.com/questions/2020882/how-to-change-progress-bars-progress-color-in-android
+                    Color.BLUE, android.graphics.PorterDuff.Mode.SRC_IN);
+        }else if (bar.getProgress() < -30){
+            bar.getProgressDrawable().setColorFilter(
+                    Color.rgb(255,88,53), android.graphics.PorterDuff.Mode.SRC_IN);
+        }else{
+            bar.getProgressDrawable().setColorFilter(
+                    Color.RED, android.graphics.PorterDuff.Mode.SRC_IN);
+        }
     }
 
     @Override

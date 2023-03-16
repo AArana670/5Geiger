@@ -3,6 +3,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/las"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
@@ -44,14 +45,44 @@
             android:layout_weight="5"
             android:onClick="jumpToHistory">
 
-            <TextView
-                android:id="@+id/start_msg"
+            <LinearLayout
+                android:id="@+id/main_measurement_panel"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="5"
-                android:text="@string/main_getStarted"
-                android:textAlignment="center"
-                android:textSize="34sp" />
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/main_measurement_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lastMeasurement_title"
+                    android:textAlignment="center"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/main_measurement_moment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:textSize="34sp" />
+
+                <TextView
+                    android:id="@+id/main_measurement_dBm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:textSize="48sp" />
+
+                <ProgressBar
+                    android:id="@+id/main_measurement_bar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:max="-20"
+                    android:min="-70"
+                    android:scaleY="3" />
+            </LinearLayout>
         </androidx.cardview.widget.CardView>
 
         <Space

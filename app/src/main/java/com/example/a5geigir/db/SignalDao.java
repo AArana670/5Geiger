@@ -19,6 +19,9 @@ public interface SignalDao {
     @Query("SELECT * FROM signal WHERE moment = :moment")
     Signal getSignalAt(String moment);
 
+    @Query("SELECT * FROM signal ORDER BY moment DESC LIMIT 1")
+    Signal getLastSignal();
+
     @Insert
     void insertSignal(Signal signal);
 

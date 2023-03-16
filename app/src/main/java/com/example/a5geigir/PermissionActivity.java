@@ -1,7 +1,9 @@
 package com.example.a5geigir;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -53,16 +55,25 @@ public class PermissionActivity extends AppCompatActivity {
             step ++;
         }else{
             //Request permissions
-
-
-            //Jump to Main Activity
-            Intent i = new Intent(this, MainActivity.class);
-            startActivity(i);
-
-            step = 1;
+            String[] permissions = {
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.POST_NOTIFICATIONS
+            };
+            ActivityCompat.requestPermissions(this, permissions, 1);
 
             //
             prefs.edit().putBoolean("firstrun", false).commit();
         }
+    }
+
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        //Jump to Main Activity
+        Intent i = new Intent(this, MainActivity.class);
+        startActivity(i);
+
+        step = 1;
     }
 }
