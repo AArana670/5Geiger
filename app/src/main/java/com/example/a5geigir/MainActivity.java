@@ -26,7 +26,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements DialogListener, NetworkListener {
 
 
-    private boolean hasPermissions = false;
     private AppDatabase db;
     private NetworkManager networkManager;
     private TextView measurementTitle;
@@ -87,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements DialogListener, N
             btn.setText(R.string.main_measureStart);
             Toast.makeText(this, "Measurement stopped", Toast.LENGTH_SHORT).show();
         } else {  //If it was not measuring, start it
-            if (!hasPermissions) {  //Insist on the permission request
+            if (!hasPermissions()) {  //Insist on the permission request
                 DialogFragment dialog = new PermissionDialog();
                 dialog.show(getSupportFragmentManager(), "permission_dialog");
             }else {  //If already has permissions
@@ -165,8 +164,6 @@ public class MainActivity extends AppCompatActivity implements DialogListener, N
         Uri uri = Uri.fromParts("package", getPackageName(), null);
         intent.setData(uri);
         startActivity(intent);
-
-        hasPermissions = true;
     }
 
     @Override
@@ -206,6 +203,10 @@ public class MainActivity extends AppCompatActivity implements DialogListener, N
     }
 
     private boolean hasPermissions(){
-        return ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED;
+        if (!(ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED))
+            return false;
+        if (false && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+            return false;
+        return true;
     }
 }
