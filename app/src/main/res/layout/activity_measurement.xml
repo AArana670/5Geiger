@@ -23,7 +23,6 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="10dp"
             android:gravity="center"
-            android:text="hh/mm/ss"
             android:textSize="34sp" />
 
         <TextView
@@ -31,7 +30,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="yyyy/mm/dd"
             android:textSize="24sp" />
 
         <Space
@@ -56,7 +54,6 @@
                 android:id="@+id/measurement_dBm_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="XX dBm"
                 android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
