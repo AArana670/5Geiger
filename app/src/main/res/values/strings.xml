@@ -39,4 +39,6 @@
     <string name="measurement_type_title">Network type</string>
     <string name="lastMeasurement_title">Last measurement</string>
     <string name="currentMeasurement_cont">New measurements</string>
+    <string name="notification_measuring_title">Measuring signals</string>
+    <string name="notification_measuring_desc">5Geigir is measuring the EM field</string>
 </resources>

@@ -3,14 +3,19 @@ package com.example.a5geigir;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.room.Room;
 
+import android.annotation.SuppressLint;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
@@ -25,13 +30,13 @@ import android.widget.Toast;
 import com.example.a5geigir.db.AppDatabase;
 import com.example.a5geigir.db.Signal;
 
-import java.util.List;
-
 public class MainActivity extends AppCompatActivity implements DialogListener, NetworkListener {
 
 
     private AppDatabase db;
     private NetworkManager networkManager;
+    private NotificationCompat.Builder builder;
+    NotificationManagerCompat compat;
     private TextView measurementTitle;
     private TextView measurementDBm;
     private TextView measurementMoment;
@@ -45,7 +50,6 @@ public class MainActivity extends AppCompatActivity implements DialogListener, N
 
         setContentView(R.layout.activity_main);
 
-
         networkManager = NetworkManager.getInstance(this);
 
         db = Room.databaseBuilder(
@@ -53,11 +57,20 @@ public class MainActivity extends AppCompatActivity implements DialogListener, N
                 AppDatabase.class,
                 "signalDB"
         ).allowMainThreadQueries().build();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){  //Create notification channel if the version is Oreo or greater
+            NotificationChannel channel = new NotificationChannel("measuring", "measuring_notification", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+        builder = new NotificationCompat.Builder(this, "measuring");
+        compat = NotificationManagerCompat.from(this);
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
+        getMenuInflater().inflate(R.menu.main_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -106,12 +119,22 @@ public class MainActivity extends AppCompatActivity implements DialogListener, N
         }
     }
 
+    @SuppressLint("MissingPermission")
     private void startMeasure() {
         networkManager.run();
+
+        builder.setContentTitle(getString(R.string.notification_measuring_title));
+        builder.setContentText(getString(R.string.notification_measuring_desc));
+        builder.setSmallIcon(R.mipmap.ic_launcher);
+        builder.setAutoCancel(true);
+
+        compat.notify(1,builder.build());  //Every permission is checked in switchState
     }
 
     public void stopMeasure(){
         networkManager.stop();
+
+        compat.cancel(1);
     }
 
     private void showLastMeasurement() {

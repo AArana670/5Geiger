@@ -40,4 +40,6 @@
     <string name="measurement_type_title">Tipo de red</string>
     <string name="lastMeasurement_title">Última medición</string>
     <string name="currentMeasurement_cont">Nuevas mediciones</string>
+    <string name="notification_measuring_title">Midiendo señales</string>
+    <string name="notification_measuring_desc">5Geigir está midiendo el campo EM</string>
 </resources>

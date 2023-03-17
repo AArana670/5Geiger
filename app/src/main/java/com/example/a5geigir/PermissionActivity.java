@@ -42,6 +42,16 @@ public class PermissionActivity extends AppCompatActivity {
         configuration.setLayoutDirection(nuevaloc);*/
 
         setContentView(R.layout.activity_permission);
+
+        if (step == 1){
+            ((TextView)findViewById(R.id.permission_title)).setText(R.string.welcome_title);
+            ((TextView)findViewById(R.id.permission_desc)).setText(R.string.welcome_msg);
+            ((Button)findViewById(R.id.permission_btn)).setText(R.string.welcome_btn);
+        }else{
+            ((TextView)findViewById(R.id.permission_title)).setText(R.string.permission_title);
+            ((TextView)findViewById(R.id.permission_desc)).setText(R.string.permission_msg);
+            ((Button)findViewById(R.id.permission_btn)).setText(R.string.permission_btn);
+        }
     }
 
 
