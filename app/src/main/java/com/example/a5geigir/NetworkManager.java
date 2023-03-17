@@ -26,7 +26,6 @@ public class NetworkManager {
     private Context context;
     private boolean running = false;
     private int counter = 0;
-    private boolean listLock = false;
 
     private NetworkManager(Context context) {
         this.context = context;
@@ -88,29 +87,17 @@ public class NetworkManager {
     }
 
     public void addListener(NetworkListener l){
-        listLock = true;
-        Log.d("Concurrence", "List locked");
         listeners.add(l);
-        listLock = false;
-        Log.d("Concurrence", "List unlocked, listener added");
     }
 
     public void removeListener(NetworkListener l){
-        listLock = true;
-        Log.d("Concurrence", "List locked");
         listeners.remove(l);
-        listLock = false;
-        Log.d("Concurrence", "List unlocked, listener removed");
     }
 
     private void notifyListeners(Signal s) {
-        if (!listLock){
-            Log.d("Concurrence", "Reading list...");
-            for (NetworkListener l : listeners){
-                l.onNetworkUpdate(s);
-            }
-        }else
-            Log.d("Concurrence", "The list is locked, couldn't read");
+        for (NetworkListener l : listeners){
+            l.onNetworkUpdate(s);
+        }
     }
 
     public boolean isRunning(){
@@ -126,7 +113,6 @@ public class NetworkManager {
         reader.start();
         running = true;
         counter = 0;
-        Log.d("Concurrence", "Thread started");
     }
 
     public void stop(){
