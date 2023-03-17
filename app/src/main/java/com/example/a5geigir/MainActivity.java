@@ -84,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements DialogListener, N
             stopMeasure();
             showLastMeasurement();
             btn.setText(R.string.main_measureStart);
+            networkManager.removeListener(this);
             Toast.makeText(this, "Measurement stopped", Toast.LENGTH_SHORT).show();
         } else {  //If it was not measuring, start it
             if (!hasPermissions()) {  //Insist on the permission request
@@ -93,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements DialogListener, N
                 startMeasure();
                 showCurrentMeasurement(/*null*/);
                 btn.setText(R.string.main_measureStop);
+                networkManager.addListener(this);
             }
         }
     }
@@ -121,7 +123,6 @@ public class MainActivity extends AppCompatActivity implements DialogListener, N
             measurementBar.setProgress(s.dBm);
             setProgressColor(s.dBm);
         }
-        networkManager.removeListener(this);
     }
 
     private void showCurrentMeasurement(/*Signal signal*/) {
@@ -135,8 +136,6 @@ public class MainActivity extends AppCompatActivity implements DialogListener, N
             measurementBar.setProgress(s.dBm);
             setProgressColor(s.dBm);
         }
-
-        networkManager.addListener(this);
     }
 
     private void setProgressColor(int p){
@@ -182,8 +181,8 @@ public class MainActivity extends AppCompatActivity implements DialogListener, N
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onPause() {
+        super.onPause();
         networkManager.removeListener(this);
     }
 

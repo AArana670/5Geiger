@@ -1,5 +1,6 @@
 package com.example.a5geigir;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.util.Log;
@@ -25,6 +26,7 @@ public class NetworkManager {
     private Context context;
     private boolean running = false;
     private int counter = 0;
+    private boolean listLock = false;
 
     private NetworkManager(Context context) {
         this.context = context;
@@ -53,6 +55,7 @@ public class NetworkManager {
         });
     }
 
+    @SuppressLint("MissingPermission")
     private Signal measure() {
         int cId = (int) Math.floor(Math.random() * 30);
         String moment = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
@@ -73,6 +76,7 @@ public class NetworkManager {
 
         Log.d("SignalDB", "Added new; cId: "+s.cId+", moment: "+s.moment+", ubiLat: "+s.ubiLat+", ubiLong: "+ s.ubiLong+", dBm: "+s.dBm);
 
+
         return s;
     }
 
@@ -84,17 +88,29 @@ public class NetworkManager {
     }
 
     public void addListener(NetworkListener l){
+        listLock = true;
+        Log.d("Concurrence", "List locked");
         listeners.add(l);
+        listLock = false;
+        Log.d("Concurrence", "List unlocked, listener added");
     }
 
     public void removeListener(NetworkListener l){
+        listLock = true;
+        Log.d("Concurrence", "List locked");
         listeners.remove(l);
+        listLock = false;
+        Log.d("Concurrence", "List unlocked, listener removed");
     }
 
     private void notifyListeners(Signal s) {
-        for (NetworkListener l : listeners){
-            l.onNetworkUpdate(s);
-        }
+        if (!listLock){
+            Log.d("Concurrence", "Reading list...");
+            for (NetworkListener l : listeners){
+                l.onNetworkUpdate(s);
+            }
+        }else
+            Log.d("Concurrence", "The list is locked, couldn't read");
     }
 
     public boolean isRunning(){
@@ -110,6 +126,7 @@ public class NetworkManager {
         reader.start();
         running = true;
         counter = 0;
+        Log.d("Concurrence", "Thread started");
     }
 
     public void stop(){
