@@ -1,17 +1,21 @@
 package com.example.a5geigir;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.room.Room;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -37,8 +41,10 @@ public class MainActivity extends AppCompatActivity implements DialogListener, N
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        getSupportActionBar().show();  //Show back the action bar after hiding it in PermissionActivity
+
         setContentView(R.layout.activity_main);
-        //getSupportActionBar().hide();
+
 
         networkManager = NetworkManager.getInstance(this);
 
@@ -47,11 +53,12 @@ public class MainActivity extends AppCompatActivity implements DialogListener, N
                 AppDatabase.class,
                 "signalDB"
         ).allowMainThreadQueries().build();
+    }
 
-        List<Signal> signalList = db.signalDao().getSignals();  //For debugging purposes only
-        for (Signal s : signalList){
-            Log.d("SignalDB", "cId: "+s.cId+", moment: "+s.moment+", ubiLat: "+s.ubiLat+", ubiLong: "+ s.ubiLong+", dBm: "+s.dBm);
-        }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     private void displayState() {  //In case the thread was already running, opening the app will restore the display
@@ -67,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements DialogListener, N
 
     }
 
-    public void jumpToSettings(View v){
+    public void jumpToSettings(){
         Intent i = new Intent(this, SettingsActivity.class);
         startActivity(i);
     }
@@ -207,5 +214,15 @@ public class MainActivity extends AppCompatActivity implements DialogListener, N
         if (false && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)
             return false;
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menu_settings:
+                jumpToSettings();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
