@@ -26,20 +26,20 @@ public class PermissionActivity extends AppCompatActivity {
 
         prefs = getSharedPreferences("com.example.a5Geigir", MODE_PRIVATE);
 
-        /*Locale nuevaloc = new Locale("eu");
+        if (!prefs.getBoolean("firstrun", true)) {  //If the parameter did not exist, it counts as true
+            Intent i = new Intent(this, MainActivity.class);
+            startActivity(i);  //skip this part if it is not the first run
+        }
+
+        //Remove title bar:  https://www.geeksforgeeks.org/how-to-remove-title-bar-from-the-activity-in-android/
+        getSupportActionBar().hide();
+
+                /*Locale nuevaloc = new Locale("eu");
         Locale.setDefault(nuevaloc);
         Configuration configuration =
                 getBaseContext().getResources().getConfiguration();
         configuration.setLocale(nuevaloc);
         configuration.setLayoutDirection(nuevaloc);*/
-
-        if (!prefs.getBoolean("firstrun", true)) {  //skip this part if it is not the first run
-            Intent i = new Intent(this, MainActivity.class);
-            startActivity(i);
-        }
-
-        //Remove title bar:  https://www.geeksforgeeks.org/how-to-remove-title-bar-from-the-activity-in-android/
-        getSupportActionBar().hide();
 
         setContentView(R.layout.activity_permission);
     }
@@ -62,8 +62,10 @@ public class PermissionActivity extends AppCompatActivity {
             };
             ActivityCompat.requestPermissions(this, permissions, 1);
 
-            //
+            // Set the preference as already run for the first time
             prefs.edit().putBoolean("firstrun", false).commit();
+
+            // Next activity displayed at onRequestPermissionsResult
         }
     }
 
@@ -73,7 +75,5 @@ public class PermissionActivity extends AppCompatActivity {
         //Jump to Main Activity
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
-
-        step = 1;
     }
 }
