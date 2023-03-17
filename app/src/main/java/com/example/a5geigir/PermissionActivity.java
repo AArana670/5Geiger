@@ -33,10 +33,10 @@ public class PermissionActivity extends AppCompatActivity {
         configuration.setLocale(nuevaloc);
         configuration.setLayoutDirection(nuevaloc);*/
 
-        /*if (prefs.getBoolean("firstrun", false)) {  //skip this part if it is not the first run
+        if (!prefs.getBoolean("firstrun", true)) {  //skip this part if it is not the first run
             Intent i = new Intent(this, MainActivity.class);
             startActivity(i);
-        }*/
+        }
 
         //Remove title bar:  https://www.geeksforgeeks.org/how-to-remove-title-bar-from-the-activity-in-android/
         getSupportActionBar().hide();
