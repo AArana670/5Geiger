@@ -12,6 +12,7 @@ import android.annotation.SuppressLint;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.Service;
 import android.app.TaskStackBuilder;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -69,11 +70,11 @@ public class MainActivity extends AppCompatActivity implements DialogListener, N
         }
 
         builder = new NotificationCompat.Builder(this, "measuring");
-        builder.setContentTitle(getString(R.string.notification_measuring_title));
+        builder.setContentTitle(getString(R.string.notification_measuring_title));  //https://developer.android.com/reference/android/app/Notification.Builder.html#public-methods
         builder.setContentText(getString(R.string.notification_measuring_desc));
         builder.setSmallIcon(R.mipmap.ic_launcher_adaptive_fore);
         builder.setAutoCancel(true);
-        builder.setOngoing(true);
+        //builder.setOngoing(true);
 
         //https://developer.android.com/develop/ui/views/notifications/navigation#build_a_pendingintent_with_a_back_stack
         Intent resultIntent = new Intent(this, MainActivity.class);
