@@ -11,6 +11,8 @@ import androidx.room.Room;
 import android.annotation.SuppressLint;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -60,10 +62,26 @@ public class MainActivity extends AppCompatActivity implements DialogListener, N
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){  //Create notification channel if the version is Oreo or greater
             NotificationChannel channel = new NotificationChannel("measuring", "measuring_notification", NotificationManager.IMPORTANCE_DEFAULT);
+            channel.enableVibration(false);
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
+
         builder = new NotificationCompat.Builder(this, "measuring");
+        builder.setContentTitle(getString(R.string.notification_measuring_title));
+        builder.setContentText(getString(R.string.notification_measuring_desc));
+        builder.setSmallIcon(R.mipmap.ic_launcher_adaptive_fore);
+        builder.setAutoCancel(true);
+        builder.setOngoing(true);
+
+        //https://developer.android.com/develop/ui/views/notifications/navigation#build_a_pendingintent_with_a_back_stack
+        Intent resultIntent = new Intent(this, MainActivity.class);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        stackBuilder.addNextIntentWithParentStack(resultIntent);
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0,
+                        PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+        builder.setContentIntent(resultPendingIntent);
+
         compat = NotificationManagerCompat.from(this);
 
     }
@@ -105,7 +123,6 @@ public class MainActivity extends AppCompatActivity implements DialogListener, N
             showLastMeasurement();
             btn.setText(R.string.main_measureStart);
             networkManager.removeListener(this);
-            Toast.makeText(this, "Measurement stopped", Toast.LENGTH_SHORT).show();
         } else {  //If it was not measuring, start it
             if (!hasPermissions()) {  //Insist on the permission request
                 DialogFragment dialog = new PermissionDialog();
@@ -122,19 +139,10 @@ public class MainActivity extends AppCompatActivity implements DialogListener, N
     @SuppressLint("MissingPermission")
     private void startMeasure() {
         networkManager.run();
-
-        builder.setContentTitle(getString(R.string.notification_measuring_title));
-        builder.setContentText(getString(R.string.notification_measuring_desc));
-        builder.setSmallIcon(R.mipmap.ic_launcher);
-        builder.setAutoCancel(true);
-
-        compat.notify(1,builder.build());  //Every permission is checked in switchState
     }
 
     public void stopMeasure(){
         networkManager.stop();
-
-        compat.cancel(1);
     }
 
     private void showLastMeasurement() {
@@ -155,11 +163,9 @@ public class MainActivity extends AppCompatActivity implements DialogListener, N
         }
     }
 
-    private void showCurrentMeasurement(/*Signal signal*/) {
+    private void showCurrentMeasurement() {
         measurementTitle.setText(getText(R.string.currentMeasurement_cont)+": "+networkManager.getCount());
-        Signal s/* = signal*/;
-        //if (s == null)  //In case it does not come from onNetworkUpdate
-            s = db.signalDao().getLastSignal();
+        Signal s = db.signalDao().getLastSignal();
         if (s != null) {
             measurementMoment.setText(s.moment);
             measurementDBm.setText(s.dBm+"");
@@ -205,7 +211,7 @@ public class MainActivity extends AppCompatActivity implements DialogListener, N
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                showCurrentMeasurement(/*s*/);
+                showCurrentMeasurement();
             }
         });
     }
@@ -214,6 +220,8 @@ public class MainActivity extends AppCompatActivity implements DialogListener, N
     protected void onPause() {
         super.onPause();
         networkManager.removeListener(this);
+        if (networkManager.isRunning())
+            buildNotification();
     }
 
     @Override
@@ -227,8 +235,10 @@ public class MainActivity extends AppCompatActivity implements DialogListener, N
 
         displayState();
 
-        if (networkManager.isRunning())
+        if (networkManager.isRunning()) {
             networkManager.addListener(this);
+            cancelNotification();
+        }
     }
 
     private boolean hasPermissions(){
@@ -247,5 +257,14 @@ public class MainActivity extends AppCompatActivity implements DialogListener, N
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @SuppressLint("MissingPermission")
+    private void buildNotification(){
+        compat.notify(1,builder.build());  //Every permission is checked in switchState
+    }
+
+    private void cancelNotification(){
+        compat.cancel(1);
     }
 }
