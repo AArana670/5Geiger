@@ -42,4 +42,6 @@
     <string name="currentMeasurement_cont">Nuevas mediciones</string>
     <string name="notification_measuring_title">Midiendo señales</string>
     <string name="notification_measuring_desc">5Geigir está midiendo el campo EM</string>
+    <string name="pref_silent_title">Modo silencioso</string>
+    <string name="pref_silent_desc">Deshabilitar las notificaciones</string>
 </resources>

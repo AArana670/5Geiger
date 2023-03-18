@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory android:title="Aspecto">
 
@@ -15,6 +16,11 @@
             android:entryValues="@array/prefs_language"
             android:key="language"
             android:title="@string/pref_lang_title" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="silent_mode"
+            android:title="@string/pref_silent_title"
+            app:summary="@string/pref_silent_desc" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_dataManagement">
 

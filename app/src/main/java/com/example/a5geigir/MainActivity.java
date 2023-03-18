@@ -8,6 +8,7 @@ import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.room.Room;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -15,12 +16,14 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.app.TaskStackBuilder;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
@@ -45,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements DialogListener, N
     private TextView measurementDBm;
     private TextView measurementMoment;
     private ProgressBar measurementBar;
+    private SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +90,7 @@ public class MainActivity extends AppCompatActivity implements DialogListener, N
 
         compat = NotificationManagerCompat.from(this);
 
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
     }
 
     @Override
@@ -246,7 +251,7 @@ public class MainActivity extends AppCompatActivity implements DialogListener, N
     private boolean hasPermissions(){
         if (!(ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED))
             return false;
-        if (false && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+        if (prefs.getBoolean("silent_mode", false) && ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED)
             return false;
         return true;
     }
@@ -261,9 +266,10 @@ public class MainActivity extends AppCompatActivity implements DialogListener, N
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressLint("MissingPermission")
+    @SuppressLint("MissingPermission")//Every permission is checked in switchState
     private void buildNotification(){
-        compat.notify(1,builder.build());  //Every permission is checked in switchState
+        if (!prefs.getBoolean("silent_mode", false))
+            compat.notify(1,builder.build());
     }
 
     private void cancelNotification(){
