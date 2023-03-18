@@ -1,6 +1,7 @@
 package com.example.a5geigir;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.preference.PreferenceManager;
 
@@ -38,6 +39,7 @@ public class PermissionActivity extends AppCompatActivity {
         }
 
         setLanguage();
+        setTheme();
 
         //Remove title bar:  https://www.geeksforgeeks.org/how-to-remove-title-bar-from-the-activity-in-android/
         getSupportActionBar().hide();
@@ -104,6 +106,26 @@ public class PermissionActivity extends AppCompatActivity {
         Context context =
                 getBaseContext().createConfigurationContext(configuration);
         getBaseContext().getResources().updateConfiguration(configuration, context.getResources().getDisplayMetrics());
+    }
+
+    public void setTheme(){
+
+        String theme = prefs.getString("theme", "def");
+
+        switch (theme){
+            case "light":
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                break;
+
+            case "dark":
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                break;
+
+            case "def":
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                break;
+        }
+
     }
 
 }

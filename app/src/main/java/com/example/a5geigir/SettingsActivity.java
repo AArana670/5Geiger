@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
@@ -49,23 +50,44 @@ public class SettingsActivity extends AppCompatActivity {
     private void registerChangeListener () {
         listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-                if (key.equals("language")){
-                    updateLanguage(sharedPreferences);
-                    refresh();
-                }
+                manageChange(sharedPreferences, key);
             };
         };
         prefs.registerOnSharedPreferenceChangeListener(listener);
     }
 
     private void manageChange(SharedPreferences sharedPreferences, String key){
-        updateLanguage(sharedPreferences);
-        refresh();
+        if (key.equals("language")) {
+            updateLanguage(sharedPreferences);
+            refresh();
+        }else if (key.equals("theme")) {
+            updateTheme(sharedPreferences);
+            refresh();
+        }
+    }
+
+    private void updateTheme(SharedPreferences sharedPreferences) {
+
+        String theme = sharedPreferences.getString("theme", "def");
+
+        switch (theme){
+            case "light":
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                break;
+
+            case "dark":
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                break;
+
+            case "def":
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                break;
+        }
+
     }
 
     private void updateLanguage(SharedPreferences prefs) {
 
-        Log.d("LanguageDebug", "Updating activity...");
         String lang = prefs.getString("language","def");
 
         if (lang == "def")
@@ -89,7 +111,6 @@ public class SettingsActivity extends AppCompatActivity {
         finish();
         startActivity(intent);
     }
-
 
     public static class SettingsFragment extends PreferenceFragmentCompat {
         @Override

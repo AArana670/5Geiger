@@ -5,11 +5,16 @@
         <item>@string/pref_theme_dark</item>
         <item>@string/pref_theme_systemDefault</item>
     </string-array>
+    <string-array name="prefs_theme_value">
+        <item>light</item>
+        <item>dark</item>
+        <item>def</item>
+    </string-array>
 
     <string-array name="prefs_language">
         <item>@string/pref_lang_spanish</item>
         <item>@string/pref_lang_english</item>
-        <!--<item>@string/pref_lang_french</item>-->
+        <!--item>@string/pref_lang_french</item-->
         <item>@string/pref_lang_systemDefault</item>
     </string-array>
     <string-array name="prefs_language_values">
