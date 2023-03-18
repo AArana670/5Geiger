@@ -2,16 +2,19 @@ package com.example.a5geigir;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.pm.PackageManager;
+import android.location.Location;
 import android.util.Log;
-import android.widget.Toast;
 
-import androidx.core.app.ActivityCompat;
+import androidx.annotation.NonNull;
 import androidx.room.Room;
 
 import com.example.a5geigir.db.AppDatabase;
 import com.example.a5geigir.db.Signal;
+import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.CancellationToken;
+import com.google.android.gms.tasks.OnTokenCanceledListener;
+import com.google.android.gms.tasks.Task;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -26,10 +29,13 @@ public class NetworkManager {
     private Context context;
     private boolean running = false;
     private int counter = 0;
+    private LocationController locationController;
 
     private NetworkManager(Context context) {
         this.context = context;
         createReader();
+
+        locationController = LocationController.getInstance(context);
 
         db = Room.databaseBuilder(
                 context,
@@ -59,9 +65,10 @@ public class NetworkManager {
         int cId = (int) Math.floor(Math.random() * 30);
         String moment = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
 
-        LocationServices.getFusedLocationProviderClient(context).getLastLocation();
-        double ubiLat = 0;
-        double ubiLong = 0;
+        Location ubi = locationController.getLastLocation();
+        
+        double ubiLat = ubi.getLatitude();
+        double ubiLong = ubi.getLongitude();
 
         int dBm = (int) ((Math.random()*-50)-20);
         String type = "5G";
