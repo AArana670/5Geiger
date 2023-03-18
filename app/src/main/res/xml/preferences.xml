@@ -11,9 +11,9 @@
             android:key="theme"
             android:title="@string/pref_theme_title" />
         <ListPreference
-            android:defaultValue="1"
+            android:defaultValue="3"
             android:entries="@array/prefs_language"
-            android:entryValues="@array/prefs_language"
+            android:entryValues="@array/prefs_language_values"
             android:key="language"
             android:title="@string/pref_lang_title" />
         <CheckBoxPreference

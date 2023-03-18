@@ -240,6 +240,8 @@ public class MainActivity extends AppCompatActivity implements DialogListener, N
         measurementMoment = findViewById(R.id.main_measurement_moment);
         measurementBar = findViewById(R.id.main_measurement_bar);
 
+        networkManager = NetworkManager.getInstance(this);
+
         displayState();
 
         if (networkManager.isRunning()) {

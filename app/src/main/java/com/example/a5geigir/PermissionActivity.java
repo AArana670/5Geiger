@@ -2,16 +2,22 @@ package com.example.a5geigir;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.preference.PreferenceManager;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Locale;
 
@@ -24,22 +30,17 @@ public class PermissionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        prefs = getSharedPreferences("com.example.a5Geigir", MODE_PRIVATE);
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         if (!prefs.getBoolean("firstrun", true)) {  //If the parameter did not exist, it counts as true
             Intent i = new Intent(this, MainActivity.class);
             startActivity(i);  //skip this part if it is not the first run
         }
 
+        setLanguage();
+
         //Remove title bar:  https://www.geeksforgeeks.org/how-to-remove-title-bar-from-the-activity-in-android/
         getSupportActionBar().hide();
-
-                /*Locale nuevaloc = new Locale("eu");
-        Locale.setDefault(nuevaloc);
-        Configuration configuration =
-                getBaseContext().getResources().getConfiguration();
-        configuration.setLocale(nuevaloc);
-        configuration.setLayoutDirection(nuevaloc);*/
 
         setContentView(R.layout.activity_permission);
 
@@ -86,4 +87,23 @@ public class PermissionActivity extends AppCompatActivity {
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
     }
+
+    public void setLanguage() {
+
+        String lang = prefs.getString("language","def");
+
+        if (lang == "def")
+            lang = Locale.getDefault().getLanguage();
+
+        Locale nuevaloc = new Locale(lang);  //Language codes: https://omegat.sourceforge.io/manual-standard/es/appendix.languages.html
+        Locale.setDefault(nuevaloc);
+        Configuration configuration = getBaseContext().getResources().getConfiguration();
+        configuration.setLocale(nuevaloc);
+        configuration.setLayoutDirection(nuevaloc);
+
+        Context context =
+                getBaseContext().createConfigurationContext(configuration);
+        getBaseContext().getResources().updateConfiguration(configuration, context.getResources().getDisplayMetrics());
+    }
+
 }
