@@ -20,6 +20,9 @@ import java.util.Locale;
 
 public class SettingsActivity extends AppCompatActivity {
 
+    private SharedPreferences.OnSharedPreferenceChangeListener listener;
+    private SharedPreferences prefs;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,24 +37,7 @@ public class SettingsActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-    }
-
-    public static class SettingsFragment extends PreferenceFragmentCompat {
-        @Override
-        public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-
-            setPreferencesFromResource(R.xml.preferences, rootKey);
-
-            /*Preference tokenPref = findPreference("token");  //Currently unused feature
-            if (tokenPref != null) {
-                tokenPref.setSummaryProvider(new Preference.SummaryProvider<Preference>() {  //https://developer.android.com/develop/ui/views/components/settings/customize-your-settings#java
-                    @Override
-                    public CharSequence provideSummary(Preference preference) {  //Set the summary of Token field
-                        return "Token: " + "Merequetengue";
-                    }
-                });
-            }*/
-        }
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
     }
 
     @Override
@@ -61,15 +47,21 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void registerChangeListener () {
-        final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-
-        sp.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
+        listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-                updateLanguage(sharedPreferences);
-            }
-        });
+                if (key.equals("language")){
+                    updateLanguage(sharedPreferences);
+                    refresh();
+                }
+            };
+        };
+        prefs.registerOnSharedPreferenceChangeListener(listener);
     }
 
+    private void manageChange(SharedPreferences sharedPreferences, String key){
+        updateLanguage(sharedPreferences);
+        refresh();
+    }
 
     private void updateLanguage(SharedPreferences prefs) {
 
@@ -89,9 +81,31 @@ public class SettingsActivity extends AppCompatActivity {
         Context context =
                 getBaseContext().createConfigurationContext(configuration);
         getBaseContext().getResources().updateConfiguration(configuration, context.getResources().getDisplayMetrics());
+    }
 
+    public void refresh(){
         Intent intent = getIntent();
+        intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         finish();
         startActivity(intent);
+    }
+
+
+    public static class SettingsFragment extends PreferenceFragmentCompat {
+        @Override
+        public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+
+            setPreferencesFromResource(R.xml.preferences, rootKey);
+
+            /*Preference tokenPref = findPreference("token");  //Currently unused feature
+            if (tokenPref != null) {
+                tokenPref.setSummaryProvider(new Preference.SummaryProvider<Preference>() {  //https://developer.android.com/develop/ui/views/components/settings/customize-your-settings#java
+                    @Override
+                    public CharSequence provideSummary(Preference preference) {  //Set the summary of Token field
+                        return "Token: " + "Merequetengue";
+                    }
+                });
+            }*/
+        }
     }
 }

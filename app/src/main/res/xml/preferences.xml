@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="Aspecto">
+    <PreferenceCategory android:title="@string/pref_appearance">
 
         <ListPreference
             android:defaultValue="1"
