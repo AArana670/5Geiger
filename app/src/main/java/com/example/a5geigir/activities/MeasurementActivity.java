@@ -1,10 +1,14 @@
 package com.example.a5geigir.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -99,5 +103,27 @@ public class MeasurementActivity extends AppCompatActivity {
             signalBar.getProgressDrawable().setColorFilter(
                     Color.RED, android.graphics.PorterDuff.Mode.SRC_IN);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menu_settings:
+                jumpToSettings();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void jumpToSettings(){
+        Intent i = new Intent(this, SettingsActivity.class);
+        i.setFlags(i.getFlags() | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i);
     }
 }

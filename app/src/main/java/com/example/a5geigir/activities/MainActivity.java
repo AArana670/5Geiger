@@ -117,11 +117,13 @@ public class MainActivity extends AppCompatActivity implements DialogListener, N
 
     public void jumpToSettings(){
         Intent i = new Intent(this, SettingsActivity.class);
+        i.setFlags(i.getFlags() | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
     }
 
     public void jumpToHistory(View v){
         Intent i = new Intent(this, HistoryActivity.class);
+        i.setFlags(i.getFlags() | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
     }
 

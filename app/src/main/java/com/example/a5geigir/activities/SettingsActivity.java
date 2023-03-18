@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -87,8 +88,9 @@ public class SettingsActivity extends AppCompatActivity {
 
         String lang = prefs.getString("language","def");
 
-        if (lang == "def")
-            lang = Locale.getDefault().getLanguage();
+        if (lang.equals("def")) {
+            lang = this.getApplicationContext().getResources().getConfiguration().getLocales().get(0).getLanguage();
+        }
 
         Locale newLoc = new Locale(lang);  //https://omegat.sourceforge.io/manual-standard/es/appendix.languages.html
         Locale.setDefault(newLoc);

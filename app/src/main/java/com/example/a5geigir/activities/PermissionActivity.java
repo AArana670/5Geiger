@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -54,7 +55,6 @@ public class PermissionActivity extends AppCompatActivity {
         }
     }
 
-
     public void jumpToNext(View v){
         if (step == 1){
             //change layout texts to next step (permissions request)
@@ -84,6 +84,7 @@ public class PermissionActivity extends AppCompatActivity {
 
         //Jump to Main Activity
         Intent i = new Intent(this, MainActivity.class);
+        i.setFlags(i.getFlags() | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
     }
 
@@ -92,7 +93,7 @@ public class PermissionActivity extends AppCompatActivity {
         String lang = prefs.getString("language","def");
 
         if (lang == "def")
-            lang = Locale.getDefault().getLanguage();
+            lang = this.getApplicationContext().getResources().getConfiguration().getLocales().get(0).getLanguage();
 
         Locale nuevaloc = new Locale(lang);  //Language codes: https://omegat.sourceforge.io/manual-standard/es/appendix.languages.html
         Locale.setDefault(nuevaloc);

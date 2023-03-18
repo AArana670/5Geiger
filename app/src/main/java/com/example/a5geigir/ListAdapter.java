@@ -50,6 +50,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>{
             public void onClick(View view) {
                 Intent i = new Intent(context, MeasurementActivity.class);
                 i.putExtra("moment",signalList.get(holder.getAdapterPosition()).moment+"");
+                i.setFlags(i.getFlags() | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 context.startActivity(i);
             }
         });

@@ -51,6 +51,7 @@ public class HistoryActivity extends AppCompatActivity {
 
     public void jumpToSettings(){
         Intent i = new Intent(this, SettingsActivity.class);
+        i.setFlags(i.getFlags() | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
     }
 
