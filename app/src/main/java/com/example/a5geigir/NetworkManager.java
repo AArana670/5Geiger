@@ -2,10 +2,12 @@ package com.example.a5geigir;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.preference.PreferenceManager;
 import androidx.room.Room;
 
 import com.example.a5geigir.db.AppDatabase;
@@ -25,6 +27,7 @@ public class NetworkManager {
     private static NetworkManager instance = null;
     private Thread reader;
     private ArrayList<NetworkListener> listeners = new ArrayList<NetworkListener>();
+    private SharedPreferences prefs;
     private AppDatabase db;
     private Context context;
     private boolean running = false;
@@ -42,6 +45,8 @@ public class NetworkManager {
                 AppDatabase.class,
                 "signalDB"
         ).allowMainThreadQueries().build();
+
+        prefs = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     private void createReader() {
@@ -65,10 +70,13 @@ public class NetworkManager {
         int cId = (int) Math.floor(Math.random() * 30);
         String moment = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
 
-        Location ubi = locationController.getLastLocation();
-        
-        double ubiLat = ubi.getLatitude();
-        double ubiLong = ubi.getLongitude();
+        double ubiLat = 0;
+        double ubiLong = 0;
+        if (!prefs.getBoolean("private_mode",false)) {
+            Location ubi = locationController.getLastLocation();
+            ubiLat = ubi.getLatitude();
+            ubiLong = ubi.getLongitude();
+        }
 
         int dBm = (int) ((Math.random()*-50)-20);
         String type = "5G";

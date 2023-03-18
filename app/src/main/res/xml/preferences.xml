@@ -29,6 +29,11 @@
             android:key="data_expiration"
             android:summary="@string/prefs_dataExpiration_desc"
             android:title="@string/prefs_dataExpiration_title" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="private_mode"
+            android:title="@string/pref_private_title"
+            app:summary="@string/pref_private_desc" />
     </PreferenceCategory>
     <Preference
         android:key="token"

@@ -43,4 +43,6 @@
     <string name="notification_measuring_desc">5Geigir is measuring the EM field</string>
     <string name="pref_silent_title">Silent mode</string>
     <string name="pref_silent_desc">Disable the notifications</string>
+    <string name="pref_private_title">Private mode</string>
+    <string name="pref_private_desc">Location data will not be stored</string>
 </resources>

@@ -44,4 +44,6 @@
     <string name="notification_measuring_desc">5Geigir está midiendo el campo EM</string>
     <string name="pref_silent_title">Modo silencioso</string>
     <string name="pref_silent_desc">Deshabilitar las notificaciones</string>
+    <string name="pref_private_title">Modo privado</string>
+    <string name="pref_private_desc">No se guardarán los datos de ubicación</string>
 </resources>
