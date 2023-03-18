@@ -26,13 +26,13 @@ public class NetworkManager {
 
     private static NetworkManager instance = null;
     private Thread reader;
-    private ArrayList<NetworkListener> listeners = new ArrayList<NetworkListener>();
-    private SharedPreferences prefs;
-    private AppDatabase db;
-    private Context context;
+    private final ArrayList<NetworkListener> listeners = new ArrayList<NetworkListener>();
+    private final SharedPreferences prefs;
+    private final AppDatabase db;
+    private final Context context;
     private boolean running = false;
     private int counter = 0;
-    private LocationController locationController;
+    private final LocationController locationController;
 
     private NetworkManager(Context context) {
         this.context = context;

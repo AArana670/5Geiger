@@ -1,4 +1,4 @@
-package com.example.a5geigir;
+package com.example.a5geigir.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
@@ -10,6 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.a5geigir.R;
 import com.example.a5geigir.db.AppDatabase;
 import com.example.a5geigir.db.Signal;
 
@@ -19,7 +20,7 @@ import java.util.List;
 
 public class MeasurementActivity extends AppCompatActivity {
 
-    private int currentPos = 0;
+    private final int currentPos = 0;
     private TextView signalDate;
     private TextView signalTime;
     private TextView signalDBm;

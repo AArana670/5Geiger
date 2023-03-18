@@ -21,10 +21,10 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 public class LocationController {
 
-    private Context context;
+    private final Context context;
     private static LocationController instance = null;
     private Location ubi;
-    private FusedLocationProviderClient fusedLocationClient;
+    private final FusedLocationProviderClient fusedLocationClient;
 
     private LocationController(Context ctx) {
 

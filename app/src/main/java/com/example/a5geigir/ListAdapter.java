@@ -7,13 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.TextClock;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.a5geigir.activities.MeasurementActivity;
 import com.example.a5geigir.db.Signal;
 
 import java.util.Collections;
@@ -21,8 +20,8 @@ import java.util.List;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>{
 
-    private List<Signal> signalList;
-    private Context context;
+    private final List<Signal> signalList;
+    private final Context context;
 
     public ListAdapter(List<Signal> signalList, Context context) {
         this.signalList = signalList;
@@ -76,11 +75,11 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>{
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
-        private TextView signalDate;
-        private TextView signalTime;
-        private TextView signalDBm;
-        private ProgressBar signalBar;
-        private View signalPanel;
+        private final TextView signalDate;
+        private final TextView signalTime;
+        private final TextView signalDBm;
+        private final ProgressBar signalBar;
+        private final View signalPanel;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
