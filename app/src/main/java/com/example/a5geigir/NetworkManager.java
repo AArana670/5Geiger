@@ -6,17 +6,11 @@ import android.content.SharedPreferences;
 import android.location.Location;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.preference.PreferenceManager;
 import androidx.room.Room;
 
 import com.example.a5geigir.db.AppDatabase;
 import com.example.a5geigir.db.Signal;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.CancellationToken;
-import com.google.android.gms.tasks.OnTokenCanceledListener;
-import com.google.android.gms.tasks.Task;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -33,6 +27,7 @@ public class NetworkManager {
     private boolean running = false;
     private int counter = 0;
     private final LocationController locationController;
+
 
     private NetworkManager(Context context) {
         this.context = context;

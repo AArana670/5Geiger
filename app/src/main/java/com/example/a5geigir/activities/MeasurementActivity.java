@@ -1,9 +1,5 @@
 package com.example.a5geigir.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -14,13 +10,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
+
 import com.example.a5geigir.R;
 import com.example.a5geigir.db.AppDatabase;
 import com.example.a5geigir.db.Signal;
-
-import org.w3c.dom.Text;
-
-import java.util.List;
 
 public class MeasurementActivity extends AppCompatActivity {
 
